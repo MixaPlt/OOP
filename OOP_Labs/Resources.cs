@@ -23,6 +23,7 @@ namespace OOP
         {
             MainWindow = mainWindow;
             MainCanvas = mainCanvas;
+            Lang.SelectedIndex = 0;
         }
     }
 }

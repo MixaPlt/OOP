@@ -24,7 +24,7 @@ namespace OOP
         {
             InitializeComponent();
             OOP.Resources.Init(mainWindow, mainCanvas);
-            Console.WriteLine("Darova"); 
+            MainMenu.Build();
         }
     }
 }

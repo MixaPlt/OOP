@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:OOP_Labs"
         mc:Ignorable="d" Icon="Resources/Images/title.ico"
         Title="ООПро" Height="600" Width="800"
-        x:Name="mainWindow" Background="#666">
+        x:Name="mainWindow" Background="#666"
+        MinHeight="80" MinWidth="80">
     <Grid>
         <Canvas x:Name="mainCanvas">
             
