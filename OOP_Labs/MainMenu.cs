@@ -102,7 +102,8 @@ namespace OOP
             if (Keyboard.IsKeyDown(Key.Enter))
             {
                 ((System.Windows.Threading.DispatcherTimer)sender).Stop();
-                switch(selectedIndex)
+                ((System.Windows.Threading.DispatcherTimer)sender).Tick -= drawConsole;
+                switch (selectedIndex)
                 {
                     case 0:
                         startGame(null, null);
@@ -148,7 +149,8 @@ namespace OOP
 
         private static void startGame(object sender, EventArgs e)
         {
-
+            Destuct();
+            PlayDefaultConsoleGame.Build();
         }
 
         private static void startSettings(object sender, EventArgs e)
