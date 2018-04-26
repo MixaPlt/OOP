@@ -20,20 +20,15 @@ namespace OOP
         public event EventHandler ThirdItemSelected;
         public event EventHandler FourthItemSelected;
         public event EventHandler FifthItemSelected;
-
-
+        public event EventHandler ItemSelected;
 
         public ConsoleMenu(string[] _items, string description)
         {
-            Console.BackgroundColor = ConsoleColor.White;
-            Console.Clear();
+            
             SelectedItem = 0;
             items = _items;
             timer = new DispatcherTimer();
-            Console.Clear();
-            Console.BackgroundColor = ConsoleColor.Yellow;
-            Console.SetCursorPosition(0, 0);
-            Console.Write("\t\t\t    Use " + (char)30 + " and " + (char)31 + " to select item" + "\t\t\t\t");
+           
             length = (UInt16)items.GetLength(0);
 
             timer.Interval = new TimeSpan(0, 0, 0, 0, 10);
@@ -42,9 +37,19 @@ namespace OOP
         }
         bool ek = !Keyboard.IsKeyToggled(Key.Enter), uk = true, dk = true;
         private UInt16 length;
+        private uint ticks = 0;
         
         private void draw(object sender, EventArgs e)
         {
+            if(ticks < 2)
+            {
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.Clear();
+                Console.SetCursorPosition(0, 0);
+                Console.BackgroundColor = ConsoleColor.Yellow;
+                Console.Write("\t\t\t    Use " + (char)30 + " and " + (char)31 + " to select item" + "\t\t\t\t");
+            }
+            ticks++;
             if (Keyboard.IsKeyToggled(Key.Enter) == ek)
             {
 
@@ -66,6 +71,7 @@ namespace OOP
                         FifthItemSelected?.Invoke(this, null);
                         break;
                 }
+                ItemSelected?.Invoke(this, null);
                 ek = !ek;
             }
             Console.SetCursorPosition(0, 10);

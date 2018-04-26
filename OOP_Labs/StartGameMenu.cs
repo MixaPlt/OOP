@@ -60,7 +60,8 @@ namespace OOP
 
         private static void newGame(object sender, EventArgs e)
         {
-
+            Destruct();
+            MapSelector.Build();
         }
 
         private static void load(object sender, EventArgs e)

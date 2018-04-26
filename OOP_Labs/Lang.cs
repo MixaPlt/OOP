@@ -20,6 +20,7 @@ namespace OOP
         public static string StartNewGame { get { return getWord(4); } }
         public static string LoadSave { get { return getWord(5); } }
         public static string Back { get { return getWord(6); } }
+        public static string MapEditor { get { return getWord(7); } }
 
         private static string getWord(UInt16 num)
         {
@@ -34,6 +35,7 @@ namespace OOP
             { "Start new game", "null"},
             { "Load save", "null"},
             { "Back", "null"},
+            { "Map editor", "null"},
         };
 
     }

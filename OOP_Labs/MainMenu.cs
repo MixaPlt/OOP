@@ -23,6 +23,7 @@ namespace OOP
         private static Button globalSettingsButton;
         private static Button copyrightsButton;
         private static Button exitGameButton;
+        private static Button mapEditorButton;
 
         private static ConsoleMenu consoleMenu;
 
@@ -31,6 +32,7 @@ namespace OOP
             MainCanvas.Children.Clear();
             startGameButton = new Button() { Content = Lang.StartGame };
             globalSettingsButton = new Button() { Content = Lang.GlobalSettings };
+            mapEditorButton = new Button() { Content = Lang.MapEditor };
             copyrightsButton = new Button() { Content = Lang.Copyrights };
             exitGameButton = new Button() { Content = Lang.ExitGame };
             //Add buttons
@@ -38,11 +40,13 @@ namespace OOP
             MainCanvas.Children.Add(globalSettingsButton);
             MainCanvas.Children.Add(copyrightsButton);
             MainCanvas.Children.Add(exitGameButton);
+            MainCanvas.Children.Add(mapEditorButton);
 
             startGameButton.FontWeight = FontWeights.Medium;
             globalSettingsButton.FontWeight = FontWeights.Medium;
             copyrightsButton.FontWeight = FontWeights.Medium;
             exitGameButton.FontWeight = FontWeights.Medium;
+            mapEditorButton.FontWeight = FontWeights.Medium;
 
             windowSizeChanged(MainWindow, null);
             MainWindow.SizeChanged += windowSizeChanged;
@@ -52,13 +56,13 @@ namespace OOP
             copyrightsButton.Click += startCopyright;
             exitGameButton.Click += exitGame;
 
-            string[] consoleItems = { Lang.StartGame, Lang.GlobalSettings, Lang.Copyrights, Lang.ExitGame};
+            string[] consoleItems = { Lang.StartGame, Lang.GlobalSettings, Lang.MapEditor, Lang.Copyrights, Lang.ExitGame};
             consoleMenu = new ConsoleMenu(consoleItems, "");
 
             consoleMenu.FirstItemSelected += startGame;
             consoleMenu.SecondItemSelected += startSettings;
-            consoleMenu.ThirdItemSelected += startCopyright;
-            consoleMenu.FourthItemSelected += exitGame;
+            consoleMenu.FourthItemSelected += startCopyright;
+            consoleMenu.FifthItemSelected += exitGame;
 
         }
 
@@ -66,38 +70,44 @@ namespace OOP
         {
             double windowHeight = MainCanvas.ActualHeight;
             double windowWidth = MainCanvas.ActualWidth;
-            double h = Math.Min(windowHeight / 4.5, windowWidth / 3.5);
+            double h = Math.Min(windowHeight / 5.5, windowWidth / 4.5);
             h = Math.Max(h, 1);
             //margin
-            Thickness margin = new Thickness((windowWidth - h * 3) / 2, windowHeight / 2 - h * 2, (windowWidth - h * 3) / 2, windowHeight / 2 - h * 2);
+            Thickness margin = new Thickness((windowWidth - h * 4) / 2, (windowHeight - h * 5) / 2, (windowWidth - h * 4) / 2, (windowHeight - h * 5) / 2);
             startGameButton.Margin = margin;
             startGameButton.Height = h;
-            startGameButton.Width = h * 3;
+            startGameButton.Width = h * 4;
             startGameButton.FontSize = h / 3;
             margin.Top += h;
 
             globalSettingsButton.Margin = margin;
             globalSettingsButton.Height = h;
-            globalSettingsButton.Width = h * 3;
+            globalSettingsButton.Width = h * 4;
             globalSettingsButton.FontSize = h / 3;
+            margin.Top += h;
+
+            mapEditorButton.Margin = margin;
+            mapEditorButton.Height = h;
+            mapEditorButton.Width = h * 4;
+            mapEditorButton.FontSize = h / 3;
             margin.Top += h;
 
             copyrightsButton.Margin = margin;
             copyrightsButton.Height = h;
-            copyrightsButton.Width = h * 3;
+            copyrightsButton.Width = h * 4;
             copyrightsButton.FontSize = h / 3;
             margin.Top += h;
 
             exitGameButton.Margin = margin;
             exitGameButton.Height = h;
-            exitGameButton.Width = h * 3;
+            exitGameButton.Width = h * 4;
             exitGameButton.FontSize = h / 3;
         }
 
         private static void startGame(object sender, EventArgs e)
         {
             Destuct();
-            
+            StartGameMenu.Build();
         }
 
         private static void startSettings(object sender, EventArgs e)
@@ -126,8 +136,6 @@ namespace OOP
 
             consoleMenu.Destruct();
             consoleMenu = null;
-
-            StartGameMenu.Build();
         }
     }
 }
