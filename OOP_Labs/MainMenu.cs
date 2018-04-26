@@ -24,6 +24,7 @@ namespace OOP
         private static Button copyrightsButton;
         private static Button exitGameButton;
 
+        private static ConsoleMenu consoleMenu;
 
         public static void Build()
         {
@@ -51,68 +52,14 @@ namespace OOP
             copyrightsButton.Click += startCopyright;
             exitGameButton.Click += exitGame;
 
-            System.Windows.Threading.DispatcherTimer timer = new System.Windows.Threading.DispatcherTimer();
-            timer.Interval = new TimeSpan(0, 0, 0, 0, 2);
-            timer.Tick += drawConsole;
-            timer.Start();
-            Console.BackgroundColor = ConsoleColor.Yellow;
-            Console.SetCursorPosition(0, 0);
-            Console.Write("\t\t\t    Use " + (char)30 + " and " + (char)31 + " to select item" + "\t\t\t\t");
+            string[] consoleItems = { Lang.StartGame, Lang.GlobalSettings, Lang.Copyrights, Lang.ExitGame};
+            consoleMenu = new ConsoleMenu(consoleItems, "");
 
-        }
+            consoleMenu.FirstItemSelected += startGame;
+            consoleMenu.SecondItemSelected += startSettings;
+            consoleMenu.ThirdItemSelected += startCopyright;
+            consoleMenu.FourthItemSelected += exitGame;
 
-        private static UInt16 selectedIndex = 0;
-        private static bool keydown = false;
-        private static void consoleKeyUp(object sender, EventArgs e)
-        {
-
-        }
-        private static void drawConsole(object sender, EventArgs e)
-        {
-
-            if (Keyboard.IsKeyDown(Key.S) || Keyboard.IsKeyDown(Key.Down) && !keydown)
-            {
-                selectedIndex++;
-            }
-            if (Keyboard.IsKeyDown(Key.W) || Keyboard.IsKeyDown(Key.Up) && !keydown)
-            {
-                selectedIndex += 2;
-            }
-            keydown = Keyboard.IsKeyDown(Key.S) || Keyboard.IsKeyDown(Key.W) || Keyboard.IsKeyDown(Key.Up) || Keyboard.IsKeyDown(Key.Down);
-
-            selectedIndex %= 3;
-            Console.SetCursorPosition(0, 10);
-            Console.BackgroundColor = ConsoleColor.Yellow;
-            if (selectedIndex == 0)
-                Console.BackgroundColor = ConsoleColor.Green;
-            else
-                Console.BackgroundColor = ConsoleColor.Yellow;
-            Console.Write("\t\t\t\tStart new game\t\t\t\t\t");
-            if (selectedIndex == 1)
-                Console.BackgroundColor = ConsoleColor.Green;
-            else
-                Console.BackgroundColor = ConsoleColor.Yellow;
-            Console.Write("\t\t\t\tSettings\t\t\t\t\t");
-            if (selectedIndex == 2)
-                Console.BackgroundColor = ConsoleColor.Green;
-            else
-                Console.BackgroundColor = ConsoleColor.Yellow;
-            Console.Write("\t\t\t\tExit game\t\t\t\t\t");
-
-            if (Keyboard.IsKeyDown(Key.Enter))
-            {
-                ((System.Windows.Threading.DispatcherTimer)sender).Stop();
-                ((System.Windows.Threading.DispatcherTimer)sender).Tick -= drawConsole;
-                switch (selectedIndex)
-                {
-                    case 0:
-                        startGame(null, null);
-                        break;
-                    default:
-                        exitGame(null, null);
-                        break;
-                }
-            }
         }
 
         private static void windowSizeChanged(object sender, EventArgs e)
@@ -150,7 +97,7 @@ namespace OOP
         private static void startGame(object sender, EventArgs e)
         {
             Destuct();
-            PlayDefaultConsoleGame.Build();
+            
         }
 
         private static void startSettings(object sender, EventArgs e)
@@ -176,6 +123,11 @@ namespace OOP
             globalSettingsButton = null;
             copyrightsButton = null;
             exitGameButton = null;
+
+            consoleMenu.Destruct();
+            consoleMenu = null;
+
+            StartGameMenu.Build();
         }
     }
 }

@@ -17,6 +17,9 @@ namespace OOP
         public static string GlobalSettings { get { return getWord(1); } }
         public static string Copyrights { get { return getWord(2); } }
         public static string ExitGame { get { return getWord(3); } }
+        public static string StartNewGame { get { return getWord(4); } }
+        public static string LoadSave { get { return getWord(5); } }
+        public static string Back { get { return getWord(6); } }
 
         private static string getWord(UInt16 num)
         {
@@ -28,6 +31,9 @@ namespace OOP
             { "Settings", "null"},
             { "Copyrights", "null"},
             { "Exit game", "null"},
+            { "Start new game", "null"},
+            { "Load save", "null"},
+            { "Back", "null"},
         };
 
     }
