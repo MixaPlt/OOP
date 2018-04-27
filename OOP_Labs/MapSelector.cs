@@ -63,7 +63,7 @@ namespace OOP
             startGameButton.Click += start;
 
             consoleMenu = new ConsoleMenu(names, "");
-            consoleMenu.ItemSelected += start;
+            consoleMenu.ItemSelected += consoleStart;
             
         }
 
@@ -73,9 +73,27 @@ namespace OOP
             StartGameMenu.Build();
         }
 
+        private static void consoleStart(object sender, EventArgs e)
+        {
+            loadList.SelectedIndex = consoleMenu.SelectedItem;
+            start(consoleMenu, e);
+        }
+
         private static void start(object sender, EventArgs e)
         {
-
+            string s;
+            if (loadList.SelectedItem == null)
+                return;
+            try
+            {
+                s = "maps\\" + loadList.SelectedItem + ".map";
+            }
+            catch
+            {
+                return;
+            }
+            Destruct();
+            Game.Build(s);
         }
 
         private static void windowSizeChanged(object sender, EventArgs e)

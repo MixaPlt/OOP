@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace OOP
 {
-    struct cell
-    {
-        public char Char;
-        public char Standart;
-        public UInt16 Type; //0 - wall 1 - empty 2 - dots 3 - energyzer
-    }
+
     static class PlayDefaultConsoleGame
     {
         static UInt16 X = 6, Y = 3;

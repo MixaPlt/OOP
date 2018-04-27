@@ -60,6 +60,7 @@
     </ApplicationDefinition>
     <Compile Include="AI.cs" />
     <Compile Include="ConsoleMenu.cs" />
+    <Compile Include="Game.cs" />
     <Compile Include="Lang.cs" />
     <Compile Include="MapEditor.cs" />
     <Compile Include="MapSelector.cs" />
