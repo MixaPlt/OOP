@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace OOP
 {
@@ -47,7 +48,7 @@ namespace OOP
                 Console.Clear();
                 Console.SetCursorPosition(0, 0);
                 Console.BackgroundColor = ConsoleColor.Yellow;
-                Console.Write("\t\t\t    Use " + (char)30 + " and " + (char)31 + " to select item" + "\t\t\t\t");
+                Console.Write(" Use " + (char)30 + " and " + (char)31 + " to select item");
             }
             ticks++;
             if (Keyboard.IsKeyToggled(Key.Enter) == ek)
@@ -74,7 +75,7 @@ namespace OOP
                 ItemSelected?.Invoke(this, null);
                 ek = !ek;
             }
-            Console.SetCursorPosition(0, 10);
+            Console.SetCursorPosition(0, 2);
             if (Keyboard.IsKeyToggled(Key.Down) == dk)
             {
                 SelectedItem++;
@@ -88,16 +89,14 @@ namespace OOP
             SelectedItem %= length;
             for(int i = 0; i < length; i++)
             {
-                Console.BackgroundColor = ConsoleColor.White;
-                Console.Write("\t\t\t");
                 if(SelectedItem == i)
                     Console.BackgroundColor = ConsoleColor.Green;
                 else
                     Console.BackgroundColor = ConsoleColor.Yellow;
-                Console.Write("\t" + items[i] + "\t");
-                if (items[i].Length < 8)
+                Console.Write("  " + items[i] + "");
+                if (items[i].Length < 6)
                     Console.Write("\t");
-                if (items[i].Length < 16)
+                if (items[i].Length < 14)
                     Console.Write("\t");
                 Console.Write("\n");
             }

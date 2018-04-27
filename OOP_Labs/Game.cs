@@ -15,60 +15,31 @@ using System.Windows.Shapes;
 
 namespace OOP
 {
-    struct cell
-    {
-        public char Char;
-        public char Standart;
-        public UInt16 Type; //0 - wall 1 - empty 2 - dots 3 - energyzer
-    }
+    
     static class Game
     {
         private static Canvas MainCanvas = OOP.Resources.MainCanvas;
         private static Window MainWindow = OOP.Resources.MainWindow;
 
-        static string sField;
         private static string path;
 
-        private static UInt16 Height, Width;
-
-        static cell[,] field;
+        private static GameField field;
 
         private static System.Windows.Threading.DispatcherTimer timer;
 
         public static void Build(string mapPath)
         {
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Clear();
             MainCanvas.Children.Clear();
             path = mapPath;
             System.IO.StreamReader reader = new System.IO.StreamReader(path);
-            sField = reader.ReadLine();
-            Width = (ushort)sField.Length;
-            sField += reader.ReadToEnd();
-            string[] k = sField.Split('\n');
-            sField = "";
-            for (int i = 0; i < k.Length; i++)
-                sField += k[i];
-            Height = (ushort)(sField.Length / Width);
-            field = new cell[Height, Width];
+            string sField = reader.ReadToEnd();
 
-            for (int i = 0; i < Height; i++)
-                for (int j = 0; j < Width; j++)
-                {
-                    field[i, j].Char = sField[i * 13 + j];
-                    switch (field[i, j].Char)
-                    {
-                        case '#':
-                            field[i, j].Type = 0;
-                            break;
-                        case '@':
-                            field[i, j].Type = 3;
-                            break;
-                        default:
-                            field[i, j].Type = 2;
-                            break;
-                    }
-                }
+            field = new GameField(sField);
+            
             timer = new System.Windows.Threading.DispatcherTimer();
-            timer.Interval = new TimeSpan(0, 0, 0, 0, 2);
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
             timer.Tick += update;
             timer.Start();
         }
@@ -78,6 +49,7 @@ namespace OOP
 
         private static void update(object sender, EventArgs e)
         {
+            
             if (Keyboard.IsKeyToggled(Key.Left) == lt)
             {
                 v = 'L';
@@ -98,7 +70,27 @@ namespace OOP
                 v = 'D';
                 dt = !dt;
             }
+            switch (v)
+            {
+                case 'L':
+                    field.MoveLeft();
+                    break;
+                case 'R':
+                    field.MoveRight();
+                    break;
+                case 'U':
+                    field.MoveUp();
+                    break;
+                case 'D':
+                    field.MoveDown();
+                    break;
+            }
+
+            field.Update();
+            Console.SetCursorPosition(0, 2);
+            field.Draw();
         }
+
 
         public static void Destruct()
         {
