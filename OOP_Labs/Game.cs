@@ -37,6 +37,8 @@ namespace OOP
             string sField = reader.ReadToEnd();
 
             field = new GameField(sField);
+
+            field.Loose += loose;
             
             timer = new System.Windows.Threading.DispatcherTimer();
             timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
@@ -45,11 +47,19 @@ namespace OOP
         }
 
         private static char v = 'L';
-        private static bool lt, rt, ut, dt;
+        private static bool lt = !Keyboard.IsKeyToggled(Key.Left), rt = !Keyboard.IsKeyToggled(Key.Right), ut = !Keyboard.IsKeyToggled(Key.Up), dt = !Keyboard.IsKeyToggled(Key.Down);
+
+        private static void loose(object sender, EventArgs e)
+        {
+            MessageBox.Show("Вы проиграли!");
+            Destruct();
+            MainMenu.Build();
+        }
 
         private static void update(object sender, EventArgs e)
         {
-            
+            if (field == null)
+                return;
             if (Keyboard.IsKeyToggled(Key.Left) == lt)
             {
                 v = 'L';
@@ -87,17 +97,21 @@ namespace OOP
             }
 
             field.Update();
+            if (field == null)
+                return;
             Console.SetCursorPosition(0, 2);
+            if (field == null)
+                return;
             field.Draw();
         }
 
 
         public static void Destruct()
         {
-            field = null;
             timer.Tick -= update;
             timer.Start();
             timer = null;
+            field = null;
         }
     }
 }

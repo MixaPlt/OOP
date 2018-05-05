@@ -64,13 +64,15 @@ namespace OOP
             consoleMenu.FourthItemSelected += startCopyright;
             consoleMenu.FifthItemSelected += exitGame;
 
+            mapEditorButton.Click += startMapEditor;
+
         }
 
         private static void windowSizeChanged(object sender, EventArgs e)
         {
             double windowHeight = MainCanvas.ActualHeight;
             double windowWidth = MainCanvas.ActualWidth;
-            double h = Math.Min(windowHeight / 5.5, windowWidth / 4.5);
+            double h = (int)Math.Min(windowHeight / 5.5, windowWidth / 4.5);
             h = Math.Max(h, 1);
             //margin
             Thickness margin = new Thickness((windowWidth - h * 4) / 2, (windowHeight - h * 5) / 2, (windowWidth - h * 4) / 2, (windowHeight - h * 5) / 2);
@@ -102,6 +104,12 @@ namespace OOP
             exitGameButton.Height = h;
             exitGameButton.Width = h * 4;
             exitGameButton.FontSize = h / 3;
+        }
+
+        private static void startMapEditor(object sender, EventArgs e)
+        {
+            Destuct();
+            GenerateMap.Build();
         }
 
         private static void startGame(object sender, EventArgs e)

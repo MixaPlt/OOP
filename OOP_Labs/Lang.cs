@@ -21,6 +21,7 @@ namespace OOP
         public static string LoadSave { get { return getWord(5); } }
         public static string Back { get { return getWord(6); } }
         public static string MapEditor { get { return getWord(7); } }
+        public static string GenerateMap { get { return getWord(8); } }
 
         private static string getWord(UInt16 num)
         {
@@ -28,14 +29,15 @@ namespace OOP
         }
         private static readonly string[,] words = 
         {
-            { "Play", "Играть"},
-            { "Settings", "null"},
-            { "Copyrights", "null"},
-            { "Exit game", "null"},
+            { "Play",           "Играть"},
+            { "Settings",       "null"},
+            { "Copyrights",     "null"},
+            { "Exit game",      "null"},
             { "Start new game", "null"},
-            { "Load save", "null"},
-            { "Back", "null"},
-            { "Map editor", "null"},
+            { "Load save",      "null"},
+            { "Back",           "null"},
+            { "Map editor",     "null"},
+            { "Generate map",   "null"},
         };
 
     }

@@ -31,13 +31,15 @@ namespace OOP
         public int Y { get; private set; }
         public int BotsNumber { get; private set; }
 
-        private int[] botsX;
-        private int[] botsY;
+        public int[] BotsX;
+        public int[] BotsY;
 
         public bool IsEnergyzed { get; private set; }
         private DispatcherTimer energyTimer;
 
         private cell[,] field;
+
+        public EventHandler Loose;
         public GameField(string map)
         {
             BotsNumber = 0;
@@ -72,8 +74,8 @@ namespace OOP
                             break;
                     }
                 }
-            botsX = new int[BotsNumber];
-            botsY = new int[BotsNumber];
+            BotsX = new int[BotsNumber];
+            BotsY = new int[BotsNumber];
             BotsNumber = 0;
             for (ushort i = 0; i < Height; i++)
                 for (ushort j = 0; j < Width; j++)
@@ -86,13 +88,12 @@ namespace OOP
                             field[i, j].Type = 2;
                             break;
                         case 'A':
-                            botsX[BotsNumber] = j;
-                            botsY[BotsNumber] = i;
+                            BotsX[BotsNumber] = j;
+                            BotsY[BotsNumber] = i;
                             BotsNumber++;
                             break;
                     }
                 }
-            MessageBox.Show(BotsNumber.ToString());
         }
 
         public cell this[int a, int b]
@@ -111,7 +112,6 @@ namespace OOP
                 return;
             field[Y, X].Char = field[Y, X].Standart;
             Y = ny;
-            field[Y, X].Char = 'o';
         }
 
         public void MoveUp()
@@ -122,7 +122,6 @@ namespace OOP
                 return;
             field[Y, X].Char = field[Y, X].Standart;
             Y = ny;
-            field[Y, X].Char = 'o';
         }
         public void MoveRight()
         {
@@ -132,7 +131,6 @@ namespace OOP
                 return;
             field[Y, X].Char = field[Y, X].Standart;
             X = nx;
-            field[Y, X].Char = 'o';
         }
         public void MoveLeft()
         {
@@ -142,7 +140,6 @@ namespace OOP
                 return;
             field[Y, X].Char = field[Y, X].Standart;
             X = nx;
-            field[Y, X].Char = 'o';
         }
 
         public void Draw()
@@ -185,6 +182,28 @@ namespace OOP
             {
                 useEnergyzer();
             }
+            if (field[Y, X].Char == 'V')
+            {
+                int l = 0;
+                int[] kekx = new int[BotsNumber - 1];
+                int[] keky = new int[BotsNumber - 1];
+                for(int i = 0; i < BotsNumber; i++)
+                    if(BotsX[i] != X || BotsY[i] != Y)
+                    {
+                        kekx[l] = BotsX[i];
+                        keky[l] = BotsY[i];
+                        l++;
+                    }
+                BotsNumber--;
+                BotsX = kekx;
+                BotsY = keky;
+            }
+            if (field[Y, X].Char == 'A')
+            {
+                Loose?.Invoke(this, null);
+            }
+
+            field[Y, X].Char = 'o';
         }
 
         private void useEnergyzer()
@@ -195,14 +214,14 @@ namespace OOP
             energyTimer.Interval = new TimeSpan(0, 0, 5);
             energyTimer.Start();
             for (int i = 0; i < BotsNumber; i++)
-                field[botsY[i], botsX[i]].Char = 'V';
+                field[BotsY[i], BotsX[i]].Char = 'V';
         }
 
         private void unEnergyzer(object sender, EventArgs e)
         {
             IsEnergyzed = false;
             for (int i = 0; i < BotsNumber; i++)
-                field[botsY[i], botsX[i]].Char = 'A';
+                field[BotsY[i], BotsX[i]].Char = 'A';
             energyTimer.Stop();
         }
 
