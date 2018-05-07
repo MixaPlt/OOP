@@ -31,8 +31,7 @@ namespace OOP
         public int Y { get; private set; }
         public int BotsNumber { get; private set; }
 
-        public int[] BotsX;
-        public int[] BotsY;
+        public Bot[] Bots;
 
         public bool IsEnergyzed { get; private set; }
         private DispatcherTimer energyTimer;
@@ -74,8 +73,9 @@ namespace OOP
                             break;
                     }
                 }
-            BotsX = new int[BotsNumber];
-            BotsY = new int[BotsNumber];
+
+            Bots = new Bot[BotsNumber];
+
             BotsNumber = 0;
             for (ushort i = 0; i < Height; i++)
                 for (ushort j = 0; j < Width; j++)
@@ -88,8 +88,8 @@ namespace OOP
                             field[i, j].Type = 2;
                             break;
                         case 'A':
-                            BotsX[BotsNumber] = j;
-                            BotsY[BotsNumber] = i;
+                            Point[] way = { new Point(1, 1), new Point(1, 2) };
+                            Bots[BotsNumber] = new CycleBot(this, new Point(j, i), way);
                             BotsNumber++;
                             break;
                     }
@@ -185,18 +185,15 @@ namespace OOP
             if (field[Y, X].Char == 'V')
             {
                 int l = 0;
-                int[] kekx = new int[BotsNumber - 1];
-                int[] keky = new int[BotsNumber - 1];
+                Bot[] kek = new Bot[BotsNumber - 1];
                 for(int i = 0; i < BotsNumber; i++)
-                    if(BotsX[i] != X || BotsY[i] != Y)
+                    if(Bots[i].Position.x != X || Bots[i].Position.y != Y)
                     {
-                        kekx[l] = BotsX[i];
-                        keky[l] = BotsY[i];
+                        kek[l] = Bots[i];
                         l++;
                     }
                 BotsNumber--;
-                BotsX = kekx;
-                BotsY = keky;
+                Bots = kek;
             }
             if (field[Y, X].Char == 'A')
             {
@@ -213,15 +210,11 @@ namespace OOP
             energyTimer.Stop();
             energyTimer.Interval = new TimeSpan(0, 0, 5);
             energyTimer.Start();
-            for (int i = 0; i < BotsNumber; i++)
-                field[BotsY[i], BotsX[i]].Char = 'V';
         }
 
         private void unEnergyzer(object sender, EventArgs e)
         {
             IsEnergyzed = false;
-            for (int i = 0; i < BotsNumber; i++)
-                field[BotsY[i], BotsX[i]].Char = 'A';
             energyTimer.Stop();
         }
 

@@ -61,6 +61,7 @@
     <Compile Include="AI.cs" />
     <Compile Include="Bot.cs" />
     <Compile Include="ConsoleMenu.cs" />
+    <Compile Include="CycleBot.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameField.cs" />
     <Compile Include="GenerateMap.cs" />
