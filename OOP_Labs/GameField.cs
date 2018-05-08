@@ -10,6 +10,7 @@ namespace OOP
 {
     struct cell
     {
+
         public char Char;
         public char Standart;
         public UInt16 Type;
@@ -23,8 +24,13 @@ namespace OOP
             return a.Type == b;
         }
     }
+
     class GameField
     {
+
+        public int Score { get; private set; } = 0;
+        public readonly int stepPossibility = 80;
+
         public int Height { get; private set; }
         public int Width { get; private set; }
         public int X { get; private set; }
@@ -60,6 +66,7 @@ namespace OOP
                     field[i, j].Char = map[i * Width + j];
                     if (field[i, j].Char == 'A')
                         BotsNumber++;
+                    field[i, j].Standart = field[i, j].Char;
                     switch (field[i, j].Char)
                     {
                         case '#':
@@ -86,9 +93,11 @@ namespace OOP
                             X = j;
                             Y = i;
                             field[i, j].Type = 2;
+                            field[i, j].Standart = ' ';
                             break;
                         case 'A':
-                            Point[] way = { new Point(1, 1), new Point(1, 2) };
+                            field[i, j].Standart = ' ';
+                            Point[] way = { new Point(1, 1), new Point(1, 2)};
                             Bots[BotsNumber] = new CycleBot(this, new Point(j, i), way);
                             BotsNumber++;
                             break;
@@ -144,7 +153,21 @@ namespace OOP
 
         public void Draw()
         {
-
+            for(int i = 0; i < Height; i++)
+            {
+                for(int j = 0; j < Width; j++)
+                {
+                    field[i, j].Char = field[i, j].Standart;
+                }
+            }
+            field[Y, X].Char = '0';
+            for(int i = 0; i < BotsNumber; i++)
+            {
+                if(!IsEnergyzed)
+                    field[Bots[i].Position.y, Bots[i].Position.x].Char = 'A';
+                else
+                    field[Bots[i].Position.y, Bots[i].Position.x].Char = 'V';
+            }
             for (int i = 0; i < Height; i++)
             {
                 for (int j = 0; j < Width; j++)
@@ -154,7 +177,7 @@ namespace OOP
                         case '#':
                             Console.BackgroundColor = ConsoleColor.Black;
                             break;
-                        case 'o':
+                        case '0':
                             Console.BackgroundColor = ConsoleColor.Green;
                             break;
                         case 'A':
@@ -174,6 +197,8 @@ namespace OOP
                 }
                 Console.Write("\n");
             }
+            Console.BackgroundColor = ConsoleColor.Cyan;
+            Console.Write("Score: " + Score.ToString());
         }
 
         public void Update()
@@ -192,6 +217,7 @@ namespace OOP
                         kek[l] = Bots[i];
                         l++;
                     }
+                Score += 50;
                 BotsNumber--;
                 Bots = kek;
             }
@@ -199,13 +225,21 @@ namespace OOP
             {
                 Loose?.Invoke(this, null);
             }
-
-            field[Y, X].Char = 'o';
+            if(field[Y, X].Char == '·')
+            {
+                Score++;
+                field[Y, X].Standart = ' ';
+            }
+            for(int i = 0; i < BotsNumber; i++)
+            {
+                Bots[i].NextStep();
+            }
         }
 
         private void useEnergyzer()
         {
             field[Y, X].Type = cell.Empty;
+            field[Y, X].Standart = ' ';
             IsEnergyzed = true;
             energyTimer.Stop();
             energyTimer.Interval = new TimeSpan(0, 0, 5);

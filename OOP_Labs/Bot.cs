@@ -29,7 +29,7 @@ namespace OOP
             field = _field;
         }
 
-        public void NextStep()
+        public virtual void NextStep()
         {
             
         }

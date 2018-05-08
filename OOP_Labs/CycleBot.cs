@@ -12,10 +12,9 @@ namespace OOP
         {
             way = _way;
         }
-        private bool spin;
         private int cp = 0;
         private Point[] way;
-        public new void NextStep()
+        public override void NextStep()
         {
             cp = (cp + 1) % way.Length;
             Position = way[cp];

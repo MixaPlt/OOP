@@ -68,7 +68,6 @@
     <Compile Include="Lang.cs" />
     <Compile Include="MapEditor.cs" />
     <Compile Include="MapSelector.cs" />
-    <Compile Include="PlayDefaultConsoleGame.cs" />
     <Compile Include="Resources.cs" />
     <Compile Include="StartGameMenu.cs" />
     <Page Include="MainWindow.xaml">
