@@ -39,6 +39,7 @@ namespace OOP
             field = new GameField(sField);
 
             field.Loose += loose;
+            field.Won += Won;
             
             timer = new System.Windows.Threading.DispatcherTimer();
             timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
@@ -46,7 +47,7 @@ namespace OOP
             timer.Start();
         }
 
-        private static char v = 'L';
+        private static char v = 'K';
         private static bool lt = !Keyboard.IsKeyToggled(Key.Left), rt = !Keyboard.IsKeyToggled(Key.Right), ut = !Keyboard.IsKeyToggled(Key.Up), dt = !Keyboard.IsKeyToggled(Key.Down);
 
         private static void loose(object sender, EventArgs e)
@@ -99,7 +100,7 @@ namespace OOP
             field.Update();
             if (field == null)
                 return;
-            Console.SetCursorPosition(0, 2);
+            Console.SetCursorPosition(0, 0);
             if (field == null)
                 return;
             field.Draw();
@@ -112,6 +113,13 @@ namespace OOP
             timer.Start();
             timer = null;
             field = null;
+        }
+
+        private static void Won(object sender, EventArgs e)
+        {
+            MessageBox.Show("U WON THE BEST GAME IN THE WORLD!");
+            Destruct();
+            MainMenu.Build();
         }
     }
 }

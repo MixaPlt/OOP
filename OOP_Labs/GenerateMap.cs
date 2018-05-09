@@ -18,7 +18,8 @@ namespace OOP
 {
     static class GenerateMap
     {
-        private static readonly int turn = 20;
+        private static readonly int turn = 60;
+        private static readonly int energyChance = 8;
 
         private static Canvas MainCanvas = OOP.Resources.MainCanvas;
         private static Window MainWindow = OOP.Resources.MainWindow;
@@ -48,14 +49,15 @@ namespace OOP
         private static void generate(object sender, EventArgs e)
         {
             Random rnd = new Random();
-            int height = rnd.Next(4, 18);
-            int width = rnd.Next(4, 32);
+            int height = rnd.Next(4, 8);
+            int width = rnd.Next(4, 16);
             char[,] field = new char[height, width];
             for (int i = 0; i < height; i++)
                 for (int j = 0; j < width; j++)
                     field[i, j] = '#';
             int ry = rnd.Next(0, height);
             int rx = rnd.Next(0, width);
+
             int vx = 0, vy = 0;
             if (rnd.Next(0, 1) >= 1)
                 vx = 1;
@@ -66,9 +68,15 @@ namespace OOP
                 vx *= -1;
                 vy *= -1;
             }
-            for(int i = 0; i < (height * width * 3) / 3; i++)
+            Point[] way = new Point[height * width];
+
+            for(int i = 0; i < height * width; i++)
             {
                 field[ry, rx] = '·';
+                if(rnd.Next(0, 100) < energyChance)
+                    field[ry, rx] = '@';
+                way[i] = new Point(rx, ry);
+
                 rx = (rx + vx + width) % width;
                 ry = (ry + vy + height) % height;
                 if(rnd.Next(0, 99) < turn)
@@ -82,8 +90,10 @@ namespace OOP
                         vy *= -1;
                 }
             }
+            field[ry, rx] = 'o';
 
             StreamWriter sw = new StreamWriter("maps\\Generated.map");
+            sw.Write(height.ToString() + ' ' + width.ToString() + '\n');
             for(int i = 0; i < height; i++)
             {
                 for(int j = 0; j < width; j++)
@@ -92,6 +102,9 @@ namespace OOP
                 }
                 sw.Write("\n");
             }
+            sw.Write("1\nCycle ");
+            for (int i = 0; i < way.Length; i++)
+                sw.Write(way[i].x.ToString() + ' ' + way[i].y.ToString() + ' ');
             sw.Flush();
             sw.Close();
         }

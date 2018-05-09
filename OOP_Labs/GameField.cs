@@ -15,6 +15,7 @@ namespace OOP
         public char Standart;
         public UInt16 Type;
         public static readonly UInt16 Wall = 0, Empty = 1, Dot = 2, Enrgyzer = 3;
+
         public static bool operator !=(cell a, UInt16 b)
         {
             return a.Type != b;
@@ -27,9 +28,11 @@ namespace OOP
 
     class GameField
     {
+        public event EventHandler Won;
 
         public int Score { get; private set; } = 0;
-        public readonly int stepPossibility = 80;
+
+        public int dots = 0;
 
         public int Height { get; private set; }
         public int Width { get; private set; }
@@ -52,20 +55,16 @@ namespace OOP
 
             energyTimer.Tick += unEnergyzer;
             string[] k = map.Split('\n');
-            Width = k[0].Length;
-            Height = k.GetLength(0);
+            Width = Int32.Parse(k[0].Split(' ')[1]);
+            Height = Int32.Parse(k[0].Split(' ')[0]);
             map = "";
-            for (int i = 0; i < k.Length; i++)
-                map += k[i];
-            Height = (ushort)(map.Length / Width);
             field = new cell[Height, Width];
 
             for (ushort i = 0; i < Height; i++)
+            {
                 for (ushort j = 0; j < Width; j++)
                 {
-                    field[i, j].Char = map[i * Width + j];
-                    if (field[i, j].Char == 'A')
-                        BotsNumber++;
+                    field[i, j].Char = k[i + 1][j];
                     field[i, j].Standart = field[i, j].Char;
                     switch (field[i, j].Char)
                     {
@@ -75,34 +74,42 @@ namespace OOP
                         case '@':
                             field[i, j].Type = 3;
                             break;
+                        case '·':
+                            field[i, j].Type = 2;
+                            dots++;
+                            break;
                         default:
                             field[i, j].Type = 2;
                             break;
                     }
+                    if(field[i, j].Char == 'o')
+                    {
+                        X = j;
+                        Y = i;
+                        field[i, j].Standart = ' ';
+                    }
                 }
+            }
+
+            BotsNumber = Int32.Parse(k[Height + 1]);
 
             Bots = new Bot[BotsNumber];
 
-            BotsNumber = 0;
-            for (ushort i = 0; i < Height; i++)
-                for (ushort j = 0; j < Width; j++)
+            for(int i = 0; i < BotsNumber; i++)
+            {
+                string[] b = k[i + Height + 2].Split(' ');
+                if(b[0][0] == 'C')
                 {
-                    switch (field[i, j].Char)
+                    Point[] way = new Point[(b.Length - 1) / 2];
+                    for(int j = 0; j < way.Length; j++)
                     {
-                        case 'o':
-                            X = j;
-                            Y = i;
-                            field[i, j].Type = 2;
-                            field[i, j].Standart = ' ';
-                            break;
-                        case 'A':
-                            field[i, j].Standart = ' ';
-                            Point[] way = { new Point(1, 1), new Point(1, 2)};
-                            Bots[BotsNumber] = new CycleBot(this, new Point(j, i), way);
-                            BotsNumber++;
-                            break;
+                        way[j] = new OOP.Point(Int32.Parse(b[j * 2 + 1]), Int32.Parse(b[j * 2 + 2]));
                     }
+                    Bots[i] = new CycleBot(this, way[0], way);
                 }
+                
+            }
+            
         }
 
         public cell this[int a, int b]
@@ -225,10 +232,14 @@ namespace OOP
             {
                 Loose?.Invoke(this, null);
             }
-            if(field[Y, X].Char == '·')
+            if(field[Y, X].Standart == '·')
             {
                 Score++;
+                dots--;
                 field[Y, X].Standart = ' ';
+                if (dots == 0)
+                    Won?.Invoke(this, null);
+                    
             }
             for(int i = 0; i < BotsNumber; i++)
             {
