@@ -22,17 +22,42 @@ namespace OOP
     }
     abstract class Bot
     {
+        public static int speed = 1;
         protected GameField field;
 
         public Bot (GameField _field, Point _position)
         {
             field = _field;
+            Position = _position;
         }
 
-        public virtual void NextStep()
+        public virtual bool NextStep() { return false; }
+        public Point Position { get;  set; }
+        public char Type = 'B';
+
+        public void MoveLeft()
         {
-            
+            int nx = (Position.x - 1 + field.Width) % field.Width;
+            if (field[Position.y, nx].Standart != '#')
+                Position = new Point(nx, Position.y);
         }
-        public Point Position { get; protected set; }
+        public void MoveRight()
+        {
+            int nx = (Position.x + 1) % field.Width;
+            if (field[Position.y, nx].Standart != '#')
+                Position = new Point(nx, Position.y);
+        }
+        public void MoveUp()
+        {
+            int ny = (Position.y - 1 + field.Height) % field.Height;
+            if (field[ny, Position.x].Standart != '#')
+                Position = new Point(Position.x, ny);
+        }
+        public void MoveDown()
+        {
+            int ny = (Position.y + 1) % field.Height;
+            if (field[ny, Position.x].Standart != '#')
+                Position = new Point(Position.x, ny);
+        }
     }
 }

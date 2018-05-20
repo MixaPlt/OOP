@@ -19,10 +19,16 @@ namespace OOP
     {
         public static Window MainWindow { get; private set; }
         public static Canvas MainCanvas { get; private set; }
+        private static Random random;
+        public static int Random(int MaxValue)
+        {
+            return random.Next(0, MaxValue);
+        }
         public static void Init(MainWindow mainWindow, Canvas mainCanvas)
         {
             MainWindow = mainWindow;
             MainCanvas = mainCanvas;
+            random = new Random();
             Lang.SelectedIndex = 0;
         }
     }

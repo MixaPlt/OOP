@@ -29,8 +29,6 @@ namespace OOP
 
         public static void Build(string mapPath)
         {
-            Console.BackgroundColor = ConsoleColor.White;
-            Console.Clear();
             MainCanvas.Children.Clear();
             path = mapPath;
             System.IO.StreamReader reader = new System.IO.StreamReader(path);
@@ -45,6 +43,11 @@ namespace OOP
             timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
             timer.Tick += update;
             timer.Start();
+
+            Console.BackgroundColor = ConsoleColor.Cyan;
+            Console.Clear();
+
+            
         }
 
         private static char v = 'K';

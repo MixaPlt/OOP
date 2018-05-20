@@ -62,12 +62,14 @@
     <Compile Include="Bot.cs" />
     <Compile Include="ConsoleMenu.cs" />
     <Compile Include="CycleBot.cs" />
+    <Compile Include="FastBot.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameField.cs" />
     <Compile Include="GenerateMap.cs" />
     <Compile Include="Lang.cs" />
     <Compile Include="MapEditor.cs" />
     <Compile Include="MapSelector.cs" />
+    <Compile Include="RandomBot.cs" />
     <Compile Include="Resources.cs" />
     <Compile Include="StartGameMenu.cs" />
     <Page Include="MainWindow.xaml">

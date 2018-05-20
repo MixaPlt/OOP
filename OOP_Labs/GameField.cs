@@ -107,8 +107,18 @@ namespace OOP
                     }
                     Bots[i] = new CycleBot(this, way[0], way);
                 }
-                
+                if (b[0][0] == 'R')
+                {
+                    Bots[i] = new RandomBot(this, new Point(Int32.Parse(b[1]), Int32.Parse(b[2])));
+                }
+                if (b[0][0] == 'F')
+                {
+                    Bots[i] = new FastBot(this, new Point(Int32.Parse(b[1]), Int32.Parse(b[2])));
+                }
             }
+
+            useEnergyzer();
+            energyTimer.Interval = new TimeSpan(0, 0, 3);
             
         }
 
@@ -179,6 +189,7 @@ namespace OOP
             {
                 for (int j = 0; j < Width; j++)
                 {
+                    Console.ForegroundColor = ConsoleColor.Black;
                     switch (field[i, j].Char)
                     {
                         case '#':
@@ -188,7 +199,8 @@ namespace OOP
                             Console.BackgroundColor = ConsoleColor.Green;
                             break;
                         case 'A':
-                            Console.BackgroundColor = ConsoleColor.Red;
+                            Console.BackgroundColor = ConsoleColor.White;
+                            Console.ForegroundColor = ConsoleColor.Red;
                             break;
                         case 'V':
                             Console.BackgroundColor = ConsoleColor.Blue;
@@ -210,16 +222,33 @@ namespace OOP
 
         public void Update()
         {
-            if(field[Y, X].Type == cell.Enrgyzer)
+            checkSubCell();
+            for(int i = 0; i < BotsNumber; i++)
+            {
+                Bots[i].NextStep();
+            }
+            checkSubCell();
+        }
+
+        private void checkSubCell()
+        {
+            if (field[Y, X].Type == cell.Enrgyzer)
             {
                 useEnergyzer();
             }
             if (field[Y, X].Char == 'V')
             {
                 int l = 0;
-                Bot[] kek = new Bot[BotsNumber - 1];
-                for(int i = 0; i < BotsNumber; i++)
-                    if(Bots[i].Position.x != X || Bots[i].Position.y != Y)
+                
+                for (int i = 0; i < BotsNumber; i++)
+                    if (Bots[i].Position.x != X || Bots[i].Position.y != Y)
+                    {
+                        l++;
+                    }
+                Bot[] kek = new Bot[l];
+                l = 0;
+                for (int i = 0; i < BotsNumber; i++)
+                    if (Bots[i].Position.x != X || Bots[i].Position.y != Y)
                     {
                         kek[l] = Bots[i];
                         l++;
@@ -232,18 +261,14 @@ namespace OOP
             {
                 Loose?.Invoke(this, null);
             }
-            if(field[Y, X].Standart == '·')
+            if (field[Y, X].Standart == '·')
             {
                 Score++;
                 dots--;
                 field[Y, X].Standart = ' ';
                 if (dots == 0)
                     Won?.Invoke(this, null);
-                    
-            }
-            for(int i = 0; i < BotsNumber; i++)
-            {
-                Bots[i].NextStep();
+
             }
         }
 

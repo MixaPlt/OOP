@@ -49,8 +49,10 @@ namespace OOP
         private static void generate(object sender, EventArgs e)
         {
             Random rnd = new Random();
-            int height = rnd.Next(4, 8);
-            int width = rnd.Next(4, 16);
+            Point[] randombots = new Point[100];
+            int rc = 0;
+            int height = rnd.Next(4, 16);
+            int width = rnd.Next(4, 46);
             char[,] field = new char[height, width];
             for (int i = 0; i < height; i++)
                 for (int j = 0; j < width; j++)
@@ -75,6 +77,11 @@ namespace OOP
                 field[ry, rx] = '·';
                 if(rnd.Next(0, 100) < energyChance)
                     field[ry, rx] = '@';
+                if (rnd.Next(0, 100) < 2)
+                {
+                    randombots[rc] = new Point(rx, ry);
+                    rc++;
+                }
                 way[i] = new Point(rx, ry);
 
                 rx = (rx + vx + width) % width;
@@ -102,9 +109,11 @@ namespace OOP
                 }
                 sw.Write("\n");
             }
-            sw.Write("1\nCycle ");
+            sw.Write((1 + rc).ToString() + "\nCycle ");
             for (int i = 0; i < way.Length; i++)
                 sw.Write(way[i].x.ToString() + ' ' + way[i].y.ToString() + ' ');
+            for (int i = 0; i < rc; i++)
+                sw.Write("\nRandom " + randombots[i].x.ToString() + ' ' + randombots[i].y.ToString());
             sw.Flush();
             sw.Close();
         }
