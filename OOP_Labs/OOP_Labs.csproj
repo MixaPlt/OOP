@@ -69,8 +69,10 @@
     <Compile Include="Lang.cs" />
     <Compile Include="MapEditor.cs" />
     <Compile Include="MapSelector.cs" />
+    <Compile Include="Potion.cs" />
     <Compile Include="RandomBot.cs" />
     <Compile Include="Resources.cs" />
+    <Compile Include="SlowMoPotion.cs" />
     <Compile Include="StartGameMenu.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

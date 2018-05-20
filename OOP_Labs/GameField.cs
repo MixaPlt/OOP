@@ -39,8 +39,10 @@ namespace OOP
         public int X { get; private set; }
         public int Y { get; private set; }
         public int BotsNumber { get; private set; }
+        public int PotionsNumber { get; private set; }
 
         public Bot[] Bots;
+        public Potion[] Potions;
 
         public bool IsEnergyzed { get; private set; }
         private DispatcherTimer energyTimer;
@@ -115,6 +117,12 @@ namespace OOP
                 {
                     Bots[i] = new FastBot(this, new Point(Int32.Parse(b[1]), Int32.Parse(b[2])));
                 }
+            }
+
+            PotionsNumber = Int32.Parse(k[Height + BotsNumber + 2]);
+            for (int i = 0; i < PotionsNumber; i++)
+            {
+                string[] b = k[i + Height + BotsNumber + 3].Split(' ');
             }
 
             useEnergyzer();

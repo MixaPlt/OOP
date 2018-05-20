@@ -30,6 +30,7 @@ namespace OOP
             MainCanvas = mainCanvas;
             random = new Random();
             Lang.SelectedIndex = 0;
+            Potion.bTimer.Tick += Potion.reBackGround;
         }
     }
 }
