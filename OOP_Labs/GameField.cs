@@ -41,6 +41,9 @@ namespace OOP
         public int BotsNumber { get; private set; }
         public int PotionsNumber { get; private set; }
 
+        private int SlowMoCounter = 0;
+        public int SlowMo = 1;
+
         public Bot[] Bots;
         public Potion[] Potions;
 
@@ -120,13 +123,18 @@ namespace OOP
             }
 
             PotionsNumber = Int32.Parse(k[Height + BotsNumber + 2]);
+            Potions = new Potion[PotionsNumber];
             for (int i = 0; i < PotionsNumber; i++)
             {
                 string[] b = k[i + Height + BotsNumber + 3].Split(' ');
+                if (b[0][0] == 'S')
+                {
+                    Potions[i] = new SlowMoPotion(new Point(Int32.Parse(b[1]), Int32.Parse(b[2])), this);
+                }
             }
 
             useEnergyzer();
-            energyTimer.Interval = new TimeSpan(0, 0, 3);
+            energyTimer.Interval = new TimeSpan(0, 0, 300);
             
         }
 
@@ -193,6 +201,10 @@ namespace OOP
                 else
                     field[Bots[i].Position.y, Bots[i].Position.x].Char = 'V';
             }
+            for(int i = 0; i < PotionsNumber; i++)
+            {
+                field[Potions[i].Position.y, Potions[i].Position.x].Char = '☻';
+            }
             for (int i = 0; i < Height; i++)
             {
                 for (int j = 0; j < Width; j++)
@@ -216,6 +228,9 @@ namespace OOP
                         case '@':
                             Console.BackgroundColor = ConsoleColor.Yellow;
                             break;
+                        case '☻':
+                            Console.ForegroundColor = ConsoleColor.Magenta;
+                            break;
                         default:
                             Console.BackgroundColor = ConsoleColor.White;
                             break;
@@ -231,6 +246,9 @@ namespace OOP
         public void Update()
         {
             checkSubCell();
+            SlowMoCounter++;
+            if (SlowMoCounter % SlowMo == 1)
+                return;
             for(int i = 0; i < BotsNumber; i++)
             {
                 Bots[i].NextStep();
@@ -238,7 +256,7 @@ namespace OOP
             checkSubCell();
         }
 
-        private void checkSubCell()
+        public void checkSubCell()
         {
             if (field[Y, X].Type == cell.Enrgyzer)
             {
@@ -261,9 +279,34 @@ namespace OOP
                         kek[l] = Bots[i];
                         l++;
                     }
-                Score += 50;
-                BotsNumber--;
+                Score += 50 * (BotsNumber - l);
+                BotsNumber = l;
                 Bots = kek;
+            }
+            if (field[Y, X].Char == '☻')
+            {
+                int l = 0;
+                for (int i = 0; i < PotionsNumber; i++)
+                    if (Potions[i].Position.x != X || Potions[i].Position.y != Y)
+                    {
+                        l++;
+                    }
+                     else
+                    {
+                        Potions[i].UsePotion();
+                    }
+                
+                Potion[] kek = new Potion[l];
+                l = 0;
+                for (int i = 0; i < PotionsNumber; i++)
+                    if (Potions[i].Position.x != X || Potions[i].Position.y != Y)
+                    {
+                        kek[l] = Potions[i];
+                        l++;
+                    }
+                Score += 10;
+                PotionsNumber = l;
+                Potions = kek;
             }
             if (field[Y, X].Char == 'A')
             {

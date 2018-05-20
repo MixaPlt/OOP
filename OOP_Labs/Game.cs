@@ -64,6 +64,7 @@ namespace OOP
         {
             if (field == null)
                 return;
+            field.checkSubCell();
             if (Keyboard.IsKeyToggled(Key.Left) == lt)
             {
                 v = 'L';
@@ -84,6 +85,8 @@ namespace OOP
                 v = 'D';
                 dt = !dt;
             }
+            if (field == null)
+                return;
             switch (v)
             {
                 case 'L':
@@ -112,8 +115,9 @@ namespace OOP
 
         public static void Destruct()
         {
-            timer.Tick -= update;
-            timer.Start();
+            field.Loose -= loose;
+            field.Won -= Won;
+            timer.Stop();
             timer = null;
             field = null;
         }

@@ -9,17 +9,21 @@ namespace OOP
 {
     abstract class Potion
     {
-        public bool isGood;
+        public bool isGood = false;
         public Point Position;
         public char Type;
+        public GameField field;
 
         public static DispatcherTimer bTimer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 0, 6)};
+        private DispatcherTimer effectTimer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 0, 6) };
         
-        public Potion(Point position)
+        public Potion(Point position, GameField _field)
         {
             Position = position;
+            effectTimer.Tick += RevokeEffect;
+            field = _field;
         }
-        public void UsePotion()
+        public virtual void UsePotion()
         {
             if (isGood)
                 Console.BackgroundColor = ConsoleColor.Green;
@@ -28,7 +32,11 @@ namespace OOP
             Console.Clear();
             bTimer.Stop();
             bTimer.Start();
-
+            effectTimer.Start();
+        }
+        public virtual void RevokeEffect(object sender, EventArgs e)
+        {
+            effectTimer.Stop();
         }
         public static void reBackGround(object sender, EventArgs e)
         {
