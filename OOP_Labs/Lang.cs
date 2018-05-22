@@ -22,6 +22,8 @@ namespace OOP
         public static string Back { get { return getWord(6); } }
         public static string MapEditor { get { return getWord(7); } }
         public static string GenerateMap { get { return getWord(8); } }
+        public static string EnterYourName { get { return getWord(9); } }
+        public static string Sumbit { get { return getWord(10); } }
 
         private static string getWord(UInt16 num)
         {
@@ -29,15 +31,17 @@ namespace OOP
         }
         private static readonly string[,] words = 
         {
-            { "Play",           "Играть"},
-            { "Settings",       "null"},
-            { "Copyrights",     "null"},
-            { "Exit game",      "null"},
-            { "Start new game", "null"},
-            { "Load save",      "null"},
-            { "Back",           "null"},
-            { "Map editor",     "null"},
-            { "Generate map",   "null"},
+            { "Play",               "Играть"},
+            { "Settings",           "null"},
+            { "Copyrights",         "null"},
+            { "Exit game",          "Выйти"},
+            { "Start new game",     "Начать новую игру"},
+            { "Load save",          "null"},
+            { "Back",               "Назад"},
+            { "Map editor",         "null"},
+            { "Generate map",       "Сгенерировать карту"},
+            { "Enter your name",    "Введите своё имя"},
+            { "Sumbit",             "Подтвердить"},
         };
 
     }

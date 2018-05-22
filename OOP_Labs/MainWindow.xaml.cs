@@ -24,7 +24,7 @@ namespace OOP
         {
             InitializeComponent();
             OOP.Resources.Init(mainWindow, mainCanvas);
-            MainMenu.Build();
+            EnterNameWindow.Build();
         }
     }
 }

@@ -11,3 +11,4 @@ D:\My\Documents\Projects\Visual Studio (C#)\OOP\OOP_Labs\obj\Release\OOP.Propert
 D:\My\Documents\Projects\Visual Studio (C#)\OOP\OOP_Labs\obj\Release\OOP_Labs.csproj.GenerateResource.Cache
 D:\My\Documents\Projects\Visual Studio (C#)\OOP\OOP_Labs\obj\Release\OOP.exe
 D:\My\Documents\Projects\Visual Studio (C#)\OOP\OOP_Labs\obj\Release\OOP.pdb
+D:\My\Documents\Projects\Visual Studio (C#)\OOP\OOP_Labs\obj\Release\OOP_Labs.csprojResolveAssemblyReference.cache

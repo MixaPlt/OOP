@@ -19,6 +19,7 @@ namespace OOP
     {
         public static Window MainWindow { get; private set; }
         public static Canvas MainCanvas { get; private set; }
+        public static string PlayerName { get; set; }
         private static Random random;
         public static int Random(int MaxValue)
         {
