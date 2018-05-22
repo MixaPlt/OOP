@@ -6,21 +6,22 @@ using System.Threading.Tasks;
 
 namespace OOP
 {
-    class SlowMoPotion : Potion
+    class DisorientationPotion : Potion
     {
-        public SlowMoPotion(Point position, GameField _field) : base(position, _field)
+        public DisorientationPotion(Point position, GameField _field) : base(position, _field)
         {
-            isGood = true;
+            isGood = false;
+            
         }
         public override void UsePotion()
         {
             base.UsePotion();
-            field.SlowMo = 5;
+            Game.Disorintated = true;
         }
         public override void RevokeEffect(object sender, EventArgs e)
         {
             base.RevokeEffect(sender, e);
-            field.SlowMo = 1;
+            Game.Disorintated = false;
         }
     }
 }

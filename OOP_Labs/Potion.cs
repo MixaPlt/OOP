@@ -14,8 +14,8 @@ namespace OOP
         public char Type;
         public GameField field;
 
-        public static DispatcherTimer bTimer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 0, 6)};
-        private DispatcherTimer effectTimer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 0, 6) };
+        public static DispatcherTimer bTimer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 0, 8)};
+        private DispatcherTimer effectTimer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 0, 8) };
         
         public Potion(Point position, GameField _field)
         {

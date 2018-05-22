@@ -68,16 +68,40 @@ namespace OOP
             switch(used[field.Y, field.X])
             {
                 case 'L':
-                    MoveLeft();
+                    if (!field.IsEnergyzed)
+                        MoveLeft();
+                    else
+                        if (!MoveRight())
+                        if (!MoveUp())
+                            MoveDown();
                     break;
                 case 'R':
-                    MoveRight();
+                    if (field.IsEnergyzed)
+                    {
+                        if (!MoveLeft())
+                            if (!MoveUp())
+                                MoveDown();
+                    }
+                    else
+                        MoveRight();
                     break;
                 case 'U':
-                    MoveUp();
+                    if (!field.IsEnergyzed)
+                        MoveUp();
+                    else
+                        if (!MoveRight())
+                        if (!MoveDown())
+                            MoveDown();
                     break;
                 case 'D':
-                    MoveDown();
+                    if (field.IsEnergyzed)
+                    {
+                        if (!MoveRight())
+                            if (!MoveUp())
+                                MoveLeft();
+                    }
+                    else
+                        MoveDown();
                     break;
             }
             return true;

@@ -44,6 +44,9 @@ namespace OOP
         private int SlowMoCounter = 0;
         public int SlowMo = 1;
 
+        public int BonusNumber = 0;
+        public Bonsus[] Bonuses;
+
         public Bot[] Bots;
         public Potion[] Potions;
 
@@ -53,6 +56,9 @@ namespace OOP
         private cell[,] field;
 
         public EventHandler Loose;
+
+        public bool Invulnerability = false;
+
         public GameField(string map)
         {
             BotsNumber = 0;
@@ -62,6 +68,9 @@ namespace OOP
             string[] k = map.Split('\n');
             Width = Int32.Parse(k[0].Split(' ')[1]);
             Height = Int32.Parse(k[0].Split(' ')[0]);
+            BonusNumber = Int32.Parse(k[0].Split(' ')[2]);
+            Bonuses = new Bonsus[BonusNumber];
+            BonusNumber = 0;
             map = "";
             field = new cell[Height, Width];
 
@@ -82,6 +91,12 @@ namespace OOP
                         case '·':
                             field[i, j].Type = 2;
                             dots++;
+                            break;
+                        case 'B':
+                            field[i, j].Type = 2;
+                            field[i, j].Standart = ' ';
+                            Bonuses[BonusNumber] = new Bonsus(this, new Point(j, i));
+                            BonusNumber++;
                             break;
                         default:
                             field[i, j].Type = 2;
@@ -131,10 +146,18 @@ namespace OOP
                 {
                     Potions[i] = new SlowMoPotion(new Point(Int32.Parse(b[1]), Int32.Parse(b[2])), this);
                 }
+                if (b[0][0] == 'D')
+                {
+                    Potions[i] = new DisorientationPotion(new Point(Int32.Parse(b[1]), Int32.Parse(b[2])), this);
+                }
+                if (b[0][0] == 'I')
+                {
+                    Potions[i] = new InvulnerabilityPotion(new Point(Int32.Parse(b[1]), Int32.Parse(b[2])), this);
+                }
             }
 
             useEnergyzer();
-            energyTimer.Interval = new TimeSpan(0, 0, 300);
+            energyTimer.Interval = new TimeSpan(0, 0, 3);
             
         }
 
@@ -193,30 +216,36 @@ namespace OOP
                     field[i, j].Char = field[i, j].Standart;
                 }
             }
-            field[Y, X].Char = '0';
-            for(int i = 0; i < BotsNumber; i++)
+            field[Y, X].Char = '☺';
+            for (int i = 0; i < PotionsNumber; i++)
+            {
+                field[Potions[i].Position.y, Potions[i].Position.x].Char = '⌂';
+            }
+            for (int i = 0; i < BonusNumber; i++)
+            {
+                field[Bonuses[i].Position.y, Bonuses[i].Position.x].Char = '♣';
+            }
+            for (int i = 0; i < BotsNumber; i++)
             {
                 if(!IsEnergyzed)
                     field[Bots[i].Position.y, Bots[i].Position.x].Char = 'A';
                 else
                     field[Bots[i].Position.y, Bots[i].Position.x].Char = 'V';
             }
-            for(int i = 0; i < PotionsNumber; i++)
-            {
-                field[Potions[i].Position.y, Potions[i].Position.x].Char = '☻';
-            }
+            
             for (int i = 0; i < Height; i++)
             {
                 for (int j = 0; j < Width; j++)
                 {
                     Console.ForegroundColor = ConsoleColor.Black;
+                    Console.BackgroundColor = ConsoleColor.White;
                     switch (field[i, j].Char)
                     {
                         case '#':
                             Console.BackgroundColor = ConsoleColor.Black;
                             break;
-                        case '0':
-                            Console.BackgroundColor = ConsoleColor.Green;
+                        case '☺':
+                            Console.ForegroundColor = ConsoleColor.Green;
                             break;
                         case 'A':
                             Console.BackgroundColor = ConsoleColor.White;
@@ -228,8 +257,11 @@ namespace OOP
                         case '@':
                             Console.BackgroundColor = ConsoleColor.Yellow;
                             break;
-                        case '☻':
+                        case '⌂':
                             Console.ForegroundColor = ConsoleColor.Magenta;
+                            break;
+                        case '♣':
+                            Console.ForegroundColor = ConsoleColor.Gray;
                             break;
                         default:
                             Console.BackgroundColor = ConsoleColor.White;
@@ -252,6 +284,10 @@ namespace OOP
             for(int i = 0; i < BotsNumber; i++)
             {
                 Bots[i].NextStep();
+            }
+            for (int i = 0; i < BonusNumber; i++)
+            {
+                Bonuses[i].NextStep();
             }
             checkSubCell();
         }
@@ -283,7 +319,30 @@ namespace OOP
                 BotsNumber = l;
                 Bots = kek;
             }
-            if (field[Y, X].Char == '☻')
+
+            if (field[Y, X].Char == '♣')
+            {
+                int l = 0;
+
+                for (int i = 0; i < BonusNumber; i++)
+                    if (Bonuses[i].Position.x != X || Bonuses[i].Position.y != Y)
+                    {
+                        l++;
+                    }
+                Bonsus[] kek = new Bonsus[l];
+                l = 0;
+                for (int i = 0; i < BonusNumber; i++)
+                    if (Bonuses[i].Position.x != X || Bonuses[i].Position.y != Y)
+                    {
+                        kek[l] = Bonuses[i];
+                        l++;
+                    }
+                Score += 100 * (BonusNumber - l);
+                BonusNumber = l;
+                Bonuses = kek;
+            }
+
+            if (field[Y, X].Char == '⌂')
             {
                 int l = 0;
                 for (int i = 0; i < PotionsNumber; i++)
@@ -308,7 +367,7 @@ namespace OOP
                 PotionsNumber = l;
                 Potions = kek;
             }
-            if (field[Y, X].Char == 'A')
+            if (field[Y, X].Char == 'A' && !Invulnerability)
             {
                 Loose?.Invoke(this, null);
             }

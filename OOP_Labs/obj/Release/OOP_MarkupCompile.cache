@@ -4,15 +4,15 @@
 exe
 C#
 .cs
-D:\My\Documents\Projects\Visual Studio (C#)\OOP\OOP_Labs\obj\Debug\
+D:\My\Documents\Projects\Visual Studio (C#)\OOP\OOP_Labs\obj\Release\
 OOP
 none
 false
-DEBUG;TRACE
+TRACE
 D:\My\Documents\Projects\Visual Studio (C#)\OOP\OOP_Labs\App.xaml
 11151548125
 
-291850611478
+25-1086277154
 13738642453
 MainWindow.xaml;
 

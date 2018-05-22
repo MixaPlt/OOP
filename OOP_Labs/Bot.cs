@@ -35,29 +35,41 @@ namespace OOP
         public Point Position { get;  set; }
         public char Type = 'B';
 
-        public void MoveLeft()
+        public bool MoveLeft()
         {
             int nx = (Position.x - 1 + field.Width) % field.Width;
             if (field[Position.y, nx].Standart != '#')
                 Position = new Point(nx, Position.y);
+            else
+                return false;
+            return true;
         }
-        public void MoveRight()
+        public bool MoveRight()
         {
             int nx = (Position.x + 1) % field.Width;
             if (field[Position.y, nx].Standart != '#')
                 Position = new Point(nx, Position.y);
+            else
+                return false;
+            return true;
         }
-        public void MoveUp()
+        public bool MoveUp()
         {
             int ny = (Position.y - 1 + field.Height) % field.Height;
             if (field[ny, Position.x].Standart != '#')
                 Position = new Point(Position.x, ny);
+            else
+                return false;
+            return true;
         }
-        public void MoveDown()
+        public bool MoveDown()
         {
             int ny = (Position.y + 1) % field.Height;
             if (field[ny, Position.x].Standart != '#')
                 Position = new Point(Position.x, ny);
+            else
+                return false;
+            return true;
         }
     }
 }

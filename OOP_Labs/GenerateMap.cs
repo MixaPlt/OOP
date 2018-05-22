@@ -75,7 +75,9 @@ namespace OOP
             for(int i = 0; i < height * width; i++)
             {
                 field[ry, rx] = '·';
-                if(rnd.Next(0, 100) < energyChance)
+                if(i == 0)
+                    field[ry, rx] = 'B';
+                if (rnd.Next(0, 100) < energyChance)
                     field[ry, rx] = '@';
                 if (rnd.Next(0, 100) < 2)
                 {
@@ -99,23 +101,29 @@ namespace OOP
             }
             field[ry, rx] = 'o';
 
-            StreamWriter sw = new StreamWriter("maps\\Generated.map");
-            sw.Write(height.ToString() + ' ' + width.ToString() + '\n');
-            for(int i = 0; i < height; i++)
+            try
             {
-                for(int j = 0; j < width; j++)
+                StreamWriter sw = new StreamWriter("maps\\Generated.map");
+                sw.Write(height.ToString() + ' ' + width.ToString() + " 1" + '\n');
+                for (int i = 0; i < height; i++)
                 {
-                    sw.Write(field[i, j]);
+                    for (int j = 0; j < width; j++)
+                    {
+                        sw.Write(field[i, j]);
+                    }
+                    sw.Write("\n");
                 }
-                sw.Write("\n");
+                sw.Write((2 + rc).ToString() + "\nCycle ");
+                for (int i = 0; i < way.Length; i++)
+                    sw.Write(way[i].x.ToString() + ' ' + way[i].y.ToString() + ' ');
+                for (int i = 0; i < rc; i++)
+                    sw.Write("\nRandom " + randombots[i].x.ToString() + ' ' + randombots[i].y.ToString());
+                sw.Write("\nFast " + way[0].x.ToString() + ' ' + way[0].y.ToString());
+                sw.Write("\n0");
+                sw.Flush();
+                sw.Close();
             }
-            sw.Write((1 + rc).ToString() + "\nCycle ");
-            for (int i = 0; i < way.Length; i++)
-                sw.Write(way[i].x.ToString() + ' ' + way[i].y.ToString() + ' ');
-            for (int i = 0; i < rc; i++)
-                sw.Write("\nRandom " + randombots[i].x.ToString() + ' ' + randombots[i].y.ToString());
-            sw.Flush();
-            sw.Close();
+            catch { }
         }
 
         private static void back(object sender, EventArgs e)

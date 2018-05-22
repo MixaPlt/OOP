@@ -21,6 +21,8 @@ namespace OOP
         private static Canvas MainCanvas = OOP.Resources.MainCanvas;
         private static Window MainWindow = OOP.Resources.MainWindow;
 
+        public static bool Disorintated = false;
+
         private static string path;
 
         private static GameField field;
@@ -47,7 +49,12 @@ namespace OOP
             Console.BackgroundColor = ConsoleColor.Cyan;
             Console.Clear();
 
-            
+            lt = !Keyboard.IsKeyToggled(Key.Left);
+            rt = !Keyboard.IsKeyToggled(Key.Right);
+            ut = !Keyboard.IsKeyToggled(Key.Up);
+            dt = !Keyboard.IsKeyToggled(Key.Down);
+
+            Disorintated = false;
         }
 
         private static char v = 'K';
@@ -90,16 +97,28 @@ namespace OOP
             switch (v)
             {
                 case 'L':
-                    field.MoveLeft();
+                    if(!Disorintated)
+                        field.MoveLeft();
+                    else
+                        field.MoveRight();
                     break;
                 case 'R':
-                    field.MoveRight();
+                    if (!Disorintated)
+                        field.MoveRight();
+                    else
+                        field.MoveLeft();
                     break;
                 case 'U':
-                    field.MoveUp();
+                    if (!Disorintated)
+                        field.MoveUp();
+                    else
+                        field.MoveDown();
                     break;
                 case 'D':
-                    field.MoveDown();
+                    if (!Disorintated)
+                        field.MoveDown();
+                    else
+                        field.MoveUp();
                     break;
             }
 

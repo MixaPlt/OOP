@@ -41,7 +41,7 @@ namespace OOP
         
         private void draw(object sender, EventArgs e)
         {
-            if(ticks < 2)
+            if(ticks < 5)
             {
                 Console.BackgroundColor = ConsoleColor.White;
                 Console.Clear();

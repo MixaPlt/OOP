@@ -1,0 +1,13 @@
+D:\My\Documents\Projects\Visual Studio (C#)\OOP\OOP_Labs\bin\Release\OOP.exe.config
+D:\My\Documents\Projects\Visual Studio (C#)\OOP\OOP_Labs\bin\Release\OOP.exe
+D:\My\Documents\Projects\Visual Studio (C#)\OOP\OOP_Labs\bin\Release\OOP.pdb
+D:\My\Documents\Projects\Visual Studio (C#)\OOP\OOP_Labs\obj\Release\MainWindow.g.cs
+D:\My\Documents\Projects\Visual Studio (C#)\OOP\OOP_Labs\obj\Release\App.g.cs
+D:\My\Documents\Projects\Visual Studio (C#)\OOP\OOP_Labs\obj\Release\OOP_MarkupCompile.cache
+D:\My\Documents\Projects\Visual Studio (C#)\OOP\OOP_Labs\obj\Release\OOP_MarkupCompile.lref
+D:\My\Documents\Projects\Visual Studio (C#)\OOP\OOP_Labs\obj\Release\MainWindow.baml
+D:\My\Documents\Projects\Visual Studio (C#)\OOP\OOP_Labs\obj\Release\OOP.g.resources
+D:\My\Documents\Projects\Visual Studio (C#)\OOP\OOP_Labs\obj\Release\OOP.Properties.Resources.resources
+D:\My\Documents\Projects\Visual Studio (C#)\OOP\OOP_Labs\obj\Release\OOP_Labs.csproj.GenerateResource.Cache
+D:\My\Documents\Projects\Visual Studio (C#)\OOP\OOP_Labs\obj\Release\OOP.exe
+D:\My\Documents\Projects\Visual Studio (C#)\OOP\OOP_Labs\obj\Release\OOP.pdb
