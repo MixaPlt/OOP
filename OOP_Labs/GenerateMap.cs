@@ -18,7 +18,7 @@ namespace OOP
 {
     static class GenerateMap
     {
-        private static readonly int turn = 60;
+        private static readonly int turn = 30;
         private static readonly int energyChance = 8;
 
         private static Canvas MainCanvas = OOP.Resources.MainCanvas;

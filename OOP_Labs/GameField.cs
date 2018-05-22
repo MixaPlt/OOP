@@ -40,8 +40,11 @@ namespace OOP
         public int Y { get; private set; }
         public int BotsNumber { get; private set; }
         public int PotionsNumber { get; private set; }
+        public DispatcherTimer timer { get; private set; }
 
-        private int SlowMoCounter = 0;
+        public int Steps { get; private set; } = 0;
+
+        
         public int SlowMo = 1;
 
         public int BonusNumber = 0;
@@ -61,6 +64,7 @@ namespace OOP
 
         public GameField(string map)
         {
+            timer = new DispatcherTimer();
             BotsNumber = 0;
             energyTimer = new DispatcherTimer();
 
@@ -158,6 +162,7 @@ namespace OOP
 
             useEnergyzer();
             energyTimer.Interval = new TimeSpan(0, 0, 3);
+            timer.Start();
             
         }
 
@@ -209,7 +214,8 @@ namespace OOP
 
         public void Draw()
         {
-            for(int i = 0; i < Height; i++)
+            Console.WriteLine("Player: " + Resources.PlayerName + "; Steps: " + Steps.ToString() + "; Time: " + (Steps / 5).ToString() + "s.");
+            for (int i = 0; i < Height; i++)
             {
                 for(int j = 0; j < Width; j++)
                 {
@@ -271,15 +277,15 @@ namespace OOP
                 }
                 Console.Write("\n");
             }
-            Console.BackgroundColor = ConsoleColor.Cyan;
+            Console.BackgroundColor = ConsoleColor.Gray;
             Console.Write("Score: " + Score.ToString());
         }
 
         public void Update()
         {
             checkSubCell();
-            SlowMoCounter++;
-            if (SlowMoCounter % SlowMo == 1)
+            Steps++;
+            if (Steps % SlowMo == 1)
                 return;
             for(int i = 0; i < BotsNumber; i++)
             {

@@ -25,6 +25,8 @@ namespace OOP
 
         private static string path;
 
+        private static int kek;
+
         private static GameField field;
 
         private static System.Windows.Threading.DispatcherTimer timer;
@@ -46,9 +48,8 @@ namespace OOP
             timer.Tick += update;
             timer.Start();
 
-            Console.BackgroundColor = ConsoleColor.Cyan;
-            Console.Clear();
-
+            
+            kek = 0;
             lt = !Keyboard.IsKeyToggled(Key.Left);
             rt = !Keyboard.IsKeyToggled(Key.Right);
             ut = !Keyboard.IsKeyToggled(Key.Up);
@@ -69,6 +70,12 @@ namespace OOP
 
         private static void update(object sender, EventArgs e)
         {
+            if(kek == 0 || kek == 3)
+            {
+                Console.BackgroundColor = ConsoleColor.Gray;
+                Console.Clear();
+            }
+            kek++;
             if (field == null)
                 return;
             field.checkSubCell();
@@ -134,6 +141,7 @@ namespace OOP
 
         public static void Destruct()
         {
+            Potion.st = true;
             field.Loose -= loose;
             field.Won -= Won;
             timer.Stop();

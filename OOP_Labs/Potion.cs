@@ -13,8 +13,9 @@ namespace OOP
         public Point Position;
         public char Type;
         public GameField field;
+        public static bool st = false;
 
-        public static DispatcherTimer bTimer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 0, 8)};
+        public static DispatcherTimer bTimer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 0, 0, 8002)};
         private DispatcherTimer effectTimer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 0, 8) };
         
         public Potion(Point position, GameField _field)
@@ -37,10 +38,15 @@ namespace OOP
         public virtual void RevokeEffect(object sender, EventArgs e)
         {
             effectTimer.Stop();
+            if (field == null)
+                return;
         }
         public static void reBackGround(object sender, EventArgs e)
         {
-            Console.BackgroundColor = ConsoleColor.Cyan;
+
+            if (st)
+                return;
+            Console.BackgroundColor = ConsoleColor.Gray;
             Console.Clear();
         }
     }
