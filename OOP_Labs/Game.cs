@@ -21,6 +21,9 @@ namespace OOP
         private static Canvas MainCanvas = OOP.Resources.MainCanvas;
         private static Window MainWindow = OOP.Resources.MainWindow;
 
+        public static Label fieldLabel;
+        
+
         public static bool Disorintated = false;
 
         private static string path;
@@ -54,6 +57,9 @@ namespace OOP
             rt = !Keyboard.IsKeyToggled(Key.Right);
             ut = !Keyboard.IsKeyToggled(Key.Up);
             dt = !Keyboard.IsKeyToggled(Key.Down);
+
+            fieldLabel = new Label();
+            MainCanvas.Children.Add(fieldLabel);
 
             Disorintated = false;
         }

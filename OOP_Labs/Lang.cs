@@ -41,7 +41,7 @@ namespace OOP
             { "Map editor",         "null"},
             { "Generate map",       "Сгенерировать карту"},
             { "Enter your name",    "Введите своё имя"},
-            { "Sumbit",             "Подтвердить"},
+            { "Submit",             "Подтвердить"},
         };
 
     }

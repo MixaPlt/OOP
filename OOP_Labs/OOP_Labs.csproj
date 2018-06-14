@@ -120,7 +120,32 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\Wall.png" />
     <Resource Include="Resources\Images\title.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\pacman.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\pust.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\enemy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\dot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\energyzer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\scared.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\bonus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\potion.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
